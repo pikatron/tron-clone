@@ -1,11 +1,10 @@
 import React from 'react';
-
+import GoogleSignInButton from './GoogleSignInButton'
 
 function App() {
   return (
     <div>
-
-      <div className="g-signin2" data-onsuccess="onSignIn"></div>
+      <GoogleSignInButton />
     </div>
   )
 }
