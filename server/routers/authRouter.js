@@ -22,9 +22,9 @@ router.post('/signin', (req, res) => {
       const hash = rows[0].password;
 
       // compare hash to password
-      bcrypt.compare(password, hash).then(valid => {
+      return bcrypt.compare(password, hash).then(valid => {
         if (valid) {
-          return res.status(200).send('signin');
+          return res.status(200).redirect('/home');
         }
         return res.status(401).redirect('/');
       });
@@ -45,7 +45,7 @@ router.post('/signup', (req, res) => {
       const { rows } = await client.query('SELECT FROM users WHERE username=$1', [username]);
       if (rows.length === 0) {
         await client.query('INSERT INTO users VALUES (DEFAULT, $1, $2)', [username, hash]);
-        res.status(200).send('signedup');
+        res.status(200).redirect('/home');
       } else {
         res.status(409).send('duplicate user');
       }

@@ -1,22 +1,20 @@
 import React from 'react';
-import Signup from './Signup'
-import { BrowserRouter as RouteWrapper, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
+import Signup from './Signup';
 import LogIn from '../containers/LogIn';
 import Home from '../containers/Home';
 
-
 function App() {
   return (
-  <RouteWrapper>
-    <Switch>
-      <Route exact path='/' component={LogIn} />
-      <Route path ='/' render ={()=> <Signup/>}/>
-      <Route path='/Home' component={Home} exact />
-
-    </Switch>
-  </RouteWrapper>
-  )
+    <Router>
+      <Switch>
+        <Route exact path="/" component={LogIn} />
+        <Route path="/signup" component={Signup} />
+        <Route exact path="/home" component={Home} />
+      </Switch>
+    </Router>
+  );
 }
 
 export default App;
