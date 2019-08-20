@@ -1,11 +1,19 @@
 import React from 'react';
-import GoogleSignInButton from './GoogleSignInButton'
+import { BrowserRouter as RouteWrapper, Route, Switch } from 'react-router-dom'
+
+import LogIn from '../containers/LogIn';
+import Home from '../containers/Home';
+
 
 function App() {
   return (
-    <div>
-      <GoogleSignInButton />
-    </div>
+  <RouteWrapper>
+    <Switch>
+      <Route path='/' component={LogIn} exact />
+      <Route path='/Home' component={Home} exact />
+
+    </Switch>
+  </RouteWrapper>
   )
 }
 
