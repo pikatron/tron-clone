@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 
 const DefaultSignIn = (props) => {
-
-    
-    
     return (
         <div>
             <form onSubmit={ (e) => props.handleSubmit(e) }>

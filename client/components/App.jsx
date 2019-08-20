@@ -1,4 +1,5 @@
 import React from 'react';
+import Signup from './Signup'
 import { BrowserRouter as RouteWrapper, Route, Switch } from 'react-router-dom'
 
 import LogIn from '../containers/LogIn';
@@ -9,7 +10,8 @@ function App() {
   return (
   <RouteWrapper>
     <Switch>
-      <Route path='/' component={LogIn} exact />
+      <Route exact path='/' component={LogIn} />
+      <Route path ='/' render ={()=> <Signup/>}/>
       <Route path='/Home' component={Home} exact />
 
     </Switch>
