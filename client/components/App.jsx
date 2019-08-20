@@ -4,12 +4,11 @@ import Signup from './Signup'
 
 
 function App() {
-  return(
+  return (
     <BrowserRouter>
-        <Route path='/' render = {()=> <Signup/>}></Route>
+        <Route exact path='/' render = {()=> <Signup/>}></Route>
     </BrowserRouter>
-  )
-  
+  );
 }
 
 export default App;

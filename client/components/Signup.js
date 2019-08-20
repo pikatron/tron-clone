@@ -1,20 +1,46 @@
-import React, { useState } from 'react'
+import React from "react";
+ import createUser  from "../redux/actions/registrationAction";
+import { connect } from "react-redux";
 
-const Signup = () => {
-    const [username, changeUsername] = useState('')
-    const [password, changePassword] = useState('')
+class Signup extends React.Component {
 
-    const handleSubmit = (e) =>{
-        e.preventDefault();
-        
-    }
+  state = {
+    username: "",
+    password: ""
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+    this.props.createUser(this.state);
+  };
+  render() {
     return (
-        <form onSubmit = {handleSubmit}>
-            <input name='username' onChange={(e) => changeUsername(e.target.value)}></input>
-            <input name='password' onChange={(e) => changePassword(e.target.value)}></input>
-            <input type="submit" value='Submit'></input>
-        </form>
-    )
+      <form onSubmit={this.handleSubmit}>
+        <input
+          name='username'
+          placeholder='Username'
+          value = {this.state.value}
+          onChange={event =>
+            this.setState({ [event.target.name]: event.target.value })
+          }
+        />
+        <input
+          name="password"
+          placeholder="Password"
+          type = 'password'
+          value={this.state.value}
+          onChange={event =>
+            this.setState({ [event.target.name]: event.target.value })
+          }
+        />
+        <input type="submit" value="Submit" />
+      </form>
+    );
+  }
 }
 
-export default Signup
+const mapDispatchToProps = () => ({
+  createUser: (userInfo) => createUser(userInfo)
+})
+
+export default connect(null, mapDispatchToProps)(Signup);
