@@ -1,10 +1,9 @@
 import React from "react";
-import createUser  from "../redux/actions/registrationAction";
+import createUser from "../redux/actions/registrationAction";
 import { connect } from "react-redux";
-import {store} from '../redux/store'
+import { store } from "../redux/store";
 
 class Signup extends React.Component {
-
   state = {
     username: "",
     password: ""
@@ -12,15 +11,16 @@ class Signup extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.createUser(this.state);
+    store.dispatch(this.props.createUser(this.state))
+    console.log(store.getState());
   };
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
         <input
-          name='username'
-          placeholder='Username'
-          value = {this.state.value}
+          name="username"
+          placeholder="Username"
+          value={this.state.value}
           onChange={event =>
             this.setState({ [event.target.name]: event.target.value })
           }
@@ -28,7 +28,7 @@ class Signup extends React.Component {
         <input
           name="password"
           placeholder="Password"
-          type = 'password'
+          type="password"
           value={this.state.value}
           onChange={event =>
             this.setState({ [event.target.name]: event.target.value })
@@ -41,7 +41,7 @@ class Signup extends React.Component {
 }
 
 const mapDispatchToProps = () => ({
-  createUser: (userInfo) => createUser(userInfo)
-})
+  createUser: userInfo => createUser(userInfo)
+});
 
-export default connect(null, mapDispatchToProps)(Signup);
+export default connect(null,mapDispatchToProps)(Signup);

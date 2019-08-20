@@ -1,10 +1,12 @@
-const userConstants = '../constants/userConstants';
+import * as userConstants from  '../constants/userConstants';
 
-const initialState = {}
+const initialState = {username: 'test'}
 const userSignup = (state = initialState, action) => {
   switch (action.type) {
-    case userConstants.SIGNUP_SUCCESS:
-      return {...state, user: action.payload.username};
+    case userConstants.SIGNUP_SUCCESS:      
+      return Object.assign({},state,{
+        username: action.payload
+      })
     case userConstants.SIGNUP_FAILURE:
       return {};
     default:

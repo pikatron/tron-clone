@@ -1,5 +1,5 @@
-import userConstants from "../constants/userConstants";
-
+import * as userConstants from "../constants/userConstants";
+import { store } from "../store";
 
 const signupSuccess = user => ({
   type: userConstants.SIGNUP_SUCCESS,
@@ -16,18 +16,22 @@ export const userActions = {
   signupFailure,
   signupSuccess
 };
+
 const createUser = user => {
   return dispatch => {
     fetch("/auth/signup", {
       method: "POST",
-      headers: "Application/json",
+      headers: {
+        "Content-type": "application/json"
+      },
       body: JSON.stringify({ user })
     })
+      .then(res => res.json())
       .then(userInfo => {
-        userInfo.json();
         dispatch(signupSuccess(user));
       })
-      .catch(error => dispatch(signupFailure(error)));
+      .catch(error => store.dispatch(signupFailure(error)));
   };
 };
+
 export default createUser;
