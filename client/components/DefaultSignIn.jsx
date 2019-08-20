@@ -15,10 +15,15 @@ function DefaultSignIn() {
           <input type="password" id="password" name="password" />
         </label>
         <div>
-          <button name="LogIn" type="submit">
+          <button type="submit">
             Sign In
           </button>
-          <button name="SignUp" type="submit" formAction="/auth/signup">
+          <button
+            type="button"
+            onClick={() => {
+              window.location.href = '/signup';
+            }}
+          >
             Sign Up
           </button>
         </div>
