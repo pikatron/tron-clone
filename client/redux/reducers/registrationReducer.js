@@ -1,11 +1,10 @@
 const userConstants = '../constants/userConstants';
 
-const registration = (state = {}, action) => {
+const initialState = {}
+const userSignup = (state = initialState, action) => {
   switch (action.type) {
-    case userConstants.SIGNUP_REQEUST:
-      return { registering: true };
     case userConstants.SIGNUP_SUCCESS:
-      return {user: action.payload.username};
+      return {...state, user: action.payload.username};
     case userConstants.SIGNUP_FAILURE:
       return {};
     default:
@@ -13,4 +12,4 @@ const registration = (state = {}, action) => {
   }
 };
 
- export default registration
+ export default userSignup

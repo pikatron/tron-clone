@@ -9,3 +9,5 @@ export const store = createStore(
   rootReducer,
   applyMiddleware(thunkMiddleware, loggerMiddleware)
 );
+
+store.subscribe(()=>console.log(store.getState()))

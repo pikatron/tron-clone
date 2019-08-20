@@ -11,7 +11,7 @@ module.exports = {
     contentBase: path.join(__dirname, 'client'),
     historyApiFallback: true,
     proxy: {
-      // '/test': 'http://localhost:3000',
+      '/auth': 'http://localhost:3000',
     },
     hot: true,
   },

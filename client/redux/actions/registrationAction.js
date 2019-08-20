@@ -1,10 +1,5 @@
 import userConstants from "../constants/userConstants";
 
-// action creaters for signup
-const signupRequest = user => ({
-  type: userConstants.SIGNUP_REQUEST,
-  payload: user
-});
 
 const signupSuccess = user => ({
   type: userConstants.SIGNUP_SUCCESS,
@@ -18,7 +13,6 @@ const signupFailure = error => ({
 
 export const userActions = {
   createUser,
-  signupRequest,
   signupFailure,
   signupSuccess
 };

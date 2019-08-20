@@ -1,6 +1,7 @@
 import React from "react";
- import createUser  from "../redux/actions/registrationAction";
+import createUser  from "../redux/actions/registrationAction";
 import { connect } from "react-redux";
+import {store} from '../redux/store'
 
 class Signup extends React.Component {
 
