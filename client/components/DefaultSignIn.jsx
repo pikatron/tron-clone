@@ -1,27 +1,35 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-const DefaultSignIn = (props) => {
-
-    
-    
-    return (
+function DefaultSignIn() {
+  return (
+    <div>
+      <form action="/auth/signin" method="post">
+        <label htmlFor="username">
+          Username:
+          <input type="username" id="username" name="username" />
+        </label>
+        <br />
+        <br />
+        <label htmlFor="password">
+          Password:
+          <input type="password" id="password" name="password" />
+        </label>
         <div>
-            <form onSubmit={ (e) => props.handleSubmit(e) }>
-                    <label>Username: </label>
-                    <input type='username' name='username' ></input>
-                        <br />
-                        <br />
-                    <label>Password: </label>
-                    <input type='password' name='password' ></input>
-                <div>        
-                    <button name='LogIn' onClick={ (e) => props.buttonClicked(e) } >Log In</button>
-                    <button name='SignUp' onClick={ (e) => props.buttonClicked(e) } >Sign Up</button>
-                </div>
-            </form>
+          <button type="submit">
+            Sign In
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              window.location.href = '/signup';
+            }}
+          >
+            Sign Up
+          </button>
         </div>
-    )
-    
-
+      </form>
+    </div>
+  );
 }
 
 export default DefaultSignIn;
