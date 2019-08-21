@@ -2,10 +2,15 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const http = require('http');
+const socketio = require('socket.io');
 
+const { initial } = require('./socket/gameSocket');
 const authRouter = require('./routers/authRouter');
 
 const app = express();
+const server = http.Server(app);
+const io = socketio(server);
 
 app.use(session({
   secret: 'tron-game',
@@ -24,4 +29,6 @@ app.get('/*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../client/index.html'));
 });
 
-app.listen(3000);
+initial(io);
+
+server.listen(3000);
