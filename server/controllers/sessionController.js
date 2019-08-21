@@ -8,9 +8,9 @@ module.exports = {
     req.session.destroy(() => res.status(200).redirect('/'));
   },
   sessionVerify: (req, res) => {
-    const { loggedIn, username } = req.session;
+    const { loggedIn } = req.session;
 
-    if (loggedIn) return res.status(200).send(username);
-    return res.status(403).redirect('/');
+    if (loggedIn) return res.status(200).send(true);
+    return res.status(403).send(false);
   },
 };
