@@ -3,11 +3,16 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const connectPG = require('connect-pg-simple');
+const http = require('http');
+const socketio = require('socket.io');
 
+const { initial } = require('./socket/gameSocket');
 const authRouter = require('./routers/authRouter');
 const pool = require('./database/pool');
 
 const app = express();
+const server = http.Server(app);
+const io = socketio(server);
 
 const PGSession = connectPG(session);
 
@@ -39,4 +44,6 @@ app.get('/*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../client/index.html'));
 });
 
-app.listen(3000);
+initial(io);
+
+server.listen(3000);
