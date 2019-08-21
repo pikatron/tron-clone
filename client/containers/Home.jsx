@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
+import io from 'socket.io-client';
+
+import LogoutButton from '../components/LogoutButton';
 
 import Board from '../containers/Board';
 
 class Home extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      socket: io(),
+    };
+
+    // emit socket events like
+    // socket.emit('turn')
   }
 
   render() {
@@ -13,6 +21,7 @@ class Home extends Component {
       <div>
         <h1>Home</h1>
         <Board />
+        <LogoutButton />
       </div>
     );
   }
