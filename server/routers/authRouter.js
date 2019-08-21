@@ -14,6 +14,6 @@ router.post('/signup', authSignup, sessionLogin, (req, res) => {
 
 router.get('/verify', sessionVerify);
 
-router.post('/logout', sessionLogout);
+router.get('/logout', sessionLogout);
 
 module.exports = router;
