@@ -1,5 +1,5 @@
 const express = require('express');
-const { sessionLogin, sessionLogout } = require('../controllers/sessionController');
+const { sessionLogin, sessionLogout, sessionVerify } = require('../controllers/sessionController');
 const { authSignin, authSignup } = require('../controllers/authController');
 
 const router = express.Router();
@@ -12,8 +12,8 @@ router.post('/signup', authSignup, sessionLogin, (req, res) => {
   res.status(200).redirect('/home');
 });
 
-router.post('/logout', sessionLogout, (req, res) => {
-  res.status(200).redirect('/');
-});
+router.get('/verify', sessionVerify);
+
+router.post('/logout', sessionLogout);
 
 module.exports = router;
