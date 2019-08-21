@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  entry: './client/index.js',
+  entry: './client/index.jsx',
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js',
@@ -25,13 +25,13 @@ module.exports = {
           extensions: ['.js', '.jsx'],
         },
         use: {
-        
+
           loader: 'babel-loader',
           options: {
             presets: ['@babel/preset-env', '@babel/preset-react'],
-            "plugins": [
-              "@babel/plugin-proposal-class-properties"
-             ],
+            plugins: [
+              '@babel/plugin-proposal-class-properties',
+            ],
           },
         },
       },
