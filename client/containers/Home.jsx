@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import io from 'socket.io-client';
 
+import LogoutButton from '../components/LogoutButton';
+
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -16,6 +18,7 @@ class Home extends Component {
     return (
       <div>
         <h1>Home</h1>
+        <LogoutButton />
       </div>
     );
   }
