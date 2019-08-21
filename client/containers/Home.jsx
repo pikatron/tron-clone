@@ -4,6 +4,7 @@ import io from 'socket.io-client';
 import LogoutButton from '../components/LogoutButton';
 
 import Board from '../containers/Board';
+import ReadyPlayer from '../components/OptionsButton';
 
 class Home extends Component {
   constructor(props) {
@@ -20,7 +21,9 @@ class Home extends Component {
     return (
       <div>
         <h1>Home</h1>
-        <Board />
+        <Board socket={this.state.socket} />
+        <ReadyPlayer team='Red' />
+        <ReadyPlayer team='Blue' />
         <LogoutButton />
       </div>
     );

@@ -1,15 +1,10 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
-class Biker extends Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            // starting direction based off team color
-            direction: props.team === 'Red' ? 'right' : 'left',
-        }
-    }
+const Biker = (props) => {
+    const [direction,changeDirection] = useState('')
 
-    handleKeyPress(e) {
+
+    const handleKeyPress = (e) =>{
         const key = {
             'ArrowLeft': 'Left',
             'a': 'Left',
@@ -25,22 +20,21 @@ class Biker extends Component {
         }
 
         if( key[e.key] ){
-            this.setState({ direction: key[e.key] });
+            changeDirection( key[e.key] );
+            props.socket.emit('turn', direction)
         } else {
-            console.log('Player: ', this.props.team, ' please enter a valid key stroke')
+            console.log('Player: ', props.team, ' please enter a valid key stroke')
         }
+    }
+    
+    return (
+        // this.props.team should either be blue/red
+        <div id='Biker' className={props.team} onKeyDown={ (e) => handleKeyPress(e) } tabIndex='0' >
+
+        </div>
+    )
    
-    }
-
-    render(){
-        console.log(this.state)
-        return (
-            // this.props.team should either be blue/red
-            <div id='Biker' className={this.props.team} onKeyDown={ (e) => this.handleKeyPress(e) } tabIndex='0' >
-
-            </div>
-        )
-    }
+    
 }
 
 export default Biker;
