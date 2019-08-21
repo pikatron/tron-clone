@@ -6,7 +6,7 @@ const connectPG = require('connect-pg-simple');
 const http = require('http');
 const socketio = require('socket.io');
 
-const { initial } = require('./socket/gameSocket');
+const { initial } = require('./game/gameSocket');
 const authRouter = require('./routers/authRouter');
 const pool = require('./database/pool');
 

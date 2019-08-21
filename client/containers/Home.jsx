@@ -10,6 +10,10 @@ class Home extends Component {
       socket: io(),
     };
 
+    const { socket } = this.state;
+
+    socket.on('updateBoard', console.log);
+    socket.emit('ready');
     // emit socket events like
     // socket.emit('turn')
   }
