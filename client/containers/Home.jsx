@@ -3,25 +3,26 @@ import io from 'socket.io-client';
 
 import LogoutButton from '../components/LogoutButton';
 
-import Board from '../containers/Board';
+import Board from './Board';
 import ReadyButton from '../components/ReadyButton';
-const socket = io()
 
-socket.on('updateBoard', (matrix)=>{
-  this.setState({board: matrix})
-});
+const socket = io();
 
-const readyPlayer = ()=>{
-  socket.emit("ready");
-
-}
+const readyPlayer = () => {
+  socket.emit('ready');
+};
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      board: []
-    }
+      board: [],
+    };
+
+    socket.on('updateBoard', matrix => {
+      console.log(matrix);
+      this.setState({ board: matrix });
+    });
     // emit socket events like
     // socket.emit('turn')
   }
@@ -31,7 +32,7 @@ class Home extends Component {
       <div>
         <h1>Home</h1>
         <Board board={this.state.board} />
-        <ReadyButton readyPlayer={this.ReadyPlayer}/>
+        <ReadyButton readyPlayer={readyPlayer} />
         <LogoutButton />
       </div>
     );
