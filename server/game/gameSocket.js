@@ -31,7 +31,7 @@ module.exports = {
       // alert board of new player
       const player = gameBoard.newPlayer();
 
-      // if player is null, too many players connected
+      // if player is false, too many players connected
       if (!player) return;
 
       socket.on('ready', () => {
@@ -52,7 +52,10 @@ module.exports = {
       socket.on('disconnect', () => {
         player.disconnect();
         // tell frontend game stopped if running
-        if (intervalTimer) gameOver('playerDisconnect');
+        if (intervalTimer) {
+          intervalTimer.stop();
+          gameOver('playerDisconnect');
+        }
       });
     });
   },

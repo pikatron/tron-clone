@@ -61,12 +61,12 @@ class Player {
       board[y][x] = this.trail;
     }
 
-    // tell board new head position
+    // update board with new head position
     {
       const { x, y } = this.position;
 
       // check collisions
-      if (board[y][x] !== 0) return false;
+      if (board[y][x] !== BOARD_ELEMENTS.EMPTY) return false;
       // update new head
       board[y][x] = this.type;
     }
@@ -118,7 +118,7 @@ module.exports = {
   },
   arePlayersReady: () => {
     for (let i = 0; i < players.length; i += 1) {
-      if (!players[0].ready) return false;
+      if (!players[i].ready) return false;
     }
     return true;
   },
