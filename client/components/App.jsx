@@ -1,10 +1,10 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import Signup from './Signup';
-import LogIn from '../containers/LogIn';
-import Home from '../containers/Home';
-import ProtectedRoute from './ProtectedRoute';
+import Signup from "./Signup";
+import LogIn from "../containers/LogIn";
+import Home from "../containers/Home";
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
   return (

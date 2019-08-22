@@ -1,10 +1,9 @@
-import React from 'react';
+import React from "react";
 
-const GridBox = () => {
-    
-    return (    
-    <div className='grid-items'></div>
-    )   
-}
+const GridBox = props => {
+  return (
+    <div className="grid-items" style={{ background: props.color }} />
+  );
+};
 
 export default GridBox;

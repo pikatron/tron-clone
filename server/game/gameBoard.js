@@ -1,8 +1,8 @@
 const opposites = {
-  left: 'right',
-  right: 'left',
-  up: 'down',
-  down: 'up',
+  left: "right",
+  right: "left",
+  up: "down",
+  down: "up"
 };
 
 const players = [];
@@ -12,7 +12,7 @@ const BOARD_ELEMENTS = {
   PLAYER_1: 1,
   PLAYER_2: 2,
   TRAIL_1: 11,
-  TRAIL_2: 22,
+  TRAIL_2: 22
 };
 
 const BOARD_SIZE = 12;
@@ -38,22 +38,23 @@ class Player {
     this.directionBeforeMoving = this.currentDirection;
 
     switch (this.currentDirection) {
-      case 'left':
+      case "left":
         this.position.x -= 1;
         break;
-      case 'right':
+      case "right":
         this.position.x += 1;
         break;
-      case 'up':
+      case "up":
         this.position.y -= 1;
         break;
-      case 'down':
+      case "down":
         this.position.y += 1;
         break;
       default:
     }
     // check out of bounds
-    if (this.position.x >= 12 || this.position.y >= 12) return false;
+    if (this.position.x >= 12 || this.position.x < 0) return false;
+    if (this.position.y >= 12 || this.position.y < 0) return false;
 
     // leave trail at old place
     {
@@ -87,13 +88,14 @@ class Player {
   }
 
   turn(direction) {
-    if (direction !== opposites[this.directionBeforeMoving]) this.currentDirection = direction;
+    if (direction !== opposites[this.directionBeforeMoving])
+      this.currentDirection = direction;
   }
 }
 
 const startingParams = [
-  ['right', { x: 0, y: 5 }, BOARD_ELEMENTS.PLAYER_1],
-  ['left', { x: 11, y: 5 }, BOARD_ELEMENTS.PLAYER_2],
+  ["right", { x: 0, y: 5 }, BOARD_ELEMENTS.PLAYER_1],
+  ["left", { x: 11, y: 5 }, BOARD_ELEMENTS.PLAYER_2]
 ];
 
 module.exports = {
@@ -122,5 +124,5 @@ module.exports = {
     }
     return true;
   },
-  getBoard: () => board,
+  getBoard: () => board
 };

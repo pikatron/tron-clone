@@ -1,29 +1,48 @@
-import React, { Component } from "react";
+import React from "react";
 
 import GridBox from "../components/GridBox";
 import Biker from "../components/Biker";
-import ReadyPlayer from "../components/ReadyButton";
 
-class Board extends Component {
+class Board extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentBoard: [] // should be 12x12 subarray grid. Values inside should reflect the output
-      // When /Home opens, the initial board from Ryan / backend is sent and we need to iterate and popkuate the board based on the grid
+      board: Array(50).fill(Array(50).fill(0))
     };
+
+    this.props.socket.on("updateBoard", matrix => {
+      this.setState({ board: matrix });
+    });
   }
 
   render() {
     let gridPositions = [];
-    for (let i = 0; i < 144; i++) {
-      gridPositions.push(<GridBox key={i} />);
+    for (let y = 0; y < 50; y++) {
+      for (let x = 0; x < 50; x++) {
+        let currentBox = this.state.board[y][x];
+        if (currentBox === 1) {
+          gridPositions.push(<GridBox key={"y" + y + "x" + x} color="blue" />);
+        } else if (currentBox === 11) {
+          gridPositions.push(
+            <GridBox key={"y" + y + "x" + x} color="#00FFFF" />
+          );
+        } else if (currentBox === 2) {
+          gridPositions.push(<GridBox key={"y" + y + "x" + x} color="red" />);
+        } else if (currentBox === 22) {
+          gridPositions.push(
+            <GridBox key={"y" + y + "x" + x} color="	#FF69B4" />
+          );
+        } else {
+          gridPositions.push(<GridBox key={"y" + y + "x" + x} color="green" />);
+        }
+      }
     }
 
     return (
       <div id="TotalBoard">
         <div id="MainBoard">{gridPositions}</div>
-        <Biker team="Red" socket={this.props.socket} coordinates={[2, 2]} />
-        <Biker team="Blue" socket={this.props.socket} />
+        {/* <Biker team="Red" socket={this.props.socket} />
+        <Biker team="Blue" socket={this.props.socket} /> */}
       </div>
     );
   }

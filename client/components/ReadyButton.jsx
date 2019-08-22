@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-const ReadyPlayer = props => {
+const ReadyButton = props => {
   const [clicked, clicker] = useState(false);
   const submitReady = () => {
     clicker(true);
@@ -16,4 +16,4 @@ const ReadyPlayer = props => {
   );
 };
 
-export default ReadyPlayer;
+export default ReadyButton;
