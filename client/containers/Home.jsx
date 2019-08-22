@@ -14,16 +14,19 @@ const socket = io();
 function Home() {
   const [board, setBoard] = useState(Array(BOARD_SIZE).fill(Array(BOARD_SIZE).fill(0)));
   const [running, setRunning] = useState(true);
+  const [winner, setWinner] = useState('none');
 
   function update(newBoard) {
     setBoard(newBoard);
     setRunning(true);
   }
-  function stop() {
+  function stop(result) {
+    setWinner(result);
     setRunning(false);
   }
   function restart() {
     setRunning(true);
+    setWinner('none');
     socket.emit('restart');
   }
   function handleKeyPress(e) {
@@ -64,7 +67,7 @@ function Home() {
       <h1>Home</h1>
       <Board board={board} />
       <ReadyButton readyPlayer={() => socket.emit('ready')} />
-      <RestartButton running={running} restart={restart} />
+      <RestartButton running={running} winner={winner} restart={restart} />
       <LogoutButton />
     </div>
   );
