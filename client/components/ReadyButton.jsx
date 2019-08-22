@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import io from "socket.io-client";
-const socket = io();
 
 const ReadyPlayer = props => {
   const [clicked, clicker] = useState(false);
   const submitReady = () => {
     clicker(true);
-    socket.emit("ready");
+    props.readyPlayer();
   };
 
   return (

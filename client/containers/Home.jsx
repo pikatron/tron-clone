@@ -10,6 +10,12 @@ const socket = io()
 socket.on('updateBoard', (matrix)=>{
   this.setState({board: matrix})
 });
+
+const readyPlayer = ()=>{
+  socket.emit("ready");
+
+}
+
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -25,7 +31,7 @@ class Home extends Component {
       <div>
         <h1>Home</h1>
         <Board board={this.state.board} />
-        <ReadyButton />
+        <ReadyButton readyPlayer={this.ReadyPlayer}/>
         <LogoutButton />
       </div>
     );
