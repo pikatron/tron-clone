@@ -1,3 +1,12 @@
+@import './Board.scss';
+@import './Biker.scss';
+@import './ReadyButton.scss';
+
 body {
     background: lightgray
+}
+
+#TotalBoard {
+    position: absolute;
+    left: 30%;
 }
