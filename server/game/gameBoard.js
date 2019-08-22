@@ -1,8 +1,8 @@
 const opposites = {
-  left: "right",
-  right: "left",
-  up: "down",
-  down: "up"
+  left: 'right',
+  right: 'left',
+  up: 'down',
+  down: 'up',
 };
 
 const players = [];
@@ -12,10 +12,10 @@ const BOARD_ELEMENTS = {
   PLAYER_1: 1,
   PLAYER_2: 2,
   TRAIL_1: 11,
-  TRAIL_2: 22
+  TRAIL_2: 22,
 };
 
-const BOARD_SIZE = 50;
+const BOARD_SIZE = 30;
 
 const board = [];
 for (let i = 0; i < BOARD_SIZE; i += 1) {
@@ -38,16 +38,16 @@ class Player {
     this.directionBeforeMoving = this.currentDirection;
 
     switch (this.currentDirection) {
-      case "left":
+      case 'left':
         this.position.x -= 1;
         break;
-      case "right":
+      case 'right':
         this.position.x += 1;
         break;
-      case "up":
+      case 'up':
         this.position.y -= 1;
         break;
-      case "down":
+      case 'down':
         this.position.y += 1;
         break;
       default:
@@ -88,8 +88,7 @@ class Player {
   }
 
   turn(direction) {
-    if (direction !== opposites[this.directionBeforeMoving])
-      this.currentDirection = direction;
+    if (direction !== opposites[this.directionBeforeMoving]) {this.currentDirection = direction;}
   }
 }
 
@@ -131,5 +130,5 @@ module.exports = {
     }
     return true;
   },
-  getBoard: () => board
+  getBoard: () => board,
 };

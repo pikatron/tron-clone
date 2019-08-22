@@ -2,6 +2,8 @@
 const d3 = require('d3-timer');
 const gameBoard = require('./gameBoard');
 
+const SPEED = 250;
+
 let io;
 
 class IntervalTimer {
@@ -10,7 +12,7 @@ class IntervalTimer {
   }
 
   startTimer() {
-    this.timer = d3.interval(updateBoard, 250);
+    this.timer = d3.interval(updateBoard, SPEED);
   }
 
   stopTimer() {
@@ -26,7 +28,7 @@ function gameOver(event) {
   io.emit('gameOver', event);
   intervalTimer.stopTimer();
 }
-
+const i = 0;
 function updateBoard() {
   const collisions = gameBoard.movePlayers();
   io.emit('updateBoard', gameBoard.getBoard());
