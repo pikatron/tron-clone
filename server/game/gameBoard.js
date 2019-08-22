@@ -94,13 +94,8 @@ class Player {
 }
 
 const startingParams = [
-<<<<<<< HEAD
-  ["right", { x: 0, y: 5 }, BOARD_ELEMENTS.PLAYER_1],
-  ["left", { x: 11, y: 5 }, BOARD_ELEMENTS.PLAYER_2]
-=======
   ['right', { x: 0, y: Math.floor(BOARD_SIZE / 2) }, BOARD_ELEMENTS.PLAYER_1],
   ['left', { x: BOARD_SIZE - 1, y: Math.floor(BOARD_SIZE / 2) }, BOARD_ELEMENTS.PLAYER_2],
->>>>>>> dev
 ];
 
 module.exports = {
