@@ -1,13 +1,30 @@
+/* eslint-disable no-use-before-define */
 const d3 = require('d3-timer');
 const gameBoard = require('./gameBoard');
 
 let io;
 
-let intervalTimer;
+const intervalTimer = new IntervalTimer();
+
+class IntervalTimer {
+  constructor() {
+    this.timer = null;
+  }
+
+  startTimer() {
+    this.timer = d3.interval(updateBoard, 250);
+  }
+
+  stopTimer() {
+    if (!this.timer) return;
+    this.timer.stop();
+    this.timer = null;
+  }
+}
 
 function gameOver(event) {
   io.emit('gameOver', event);
-  intervalTimer.stop();
+  intervalTimer.stopTimer();
 }
 
 function updateBoard() {
@@ -41,8 +58,14 @@ module.exports = _io => {
       if (gameBoard.arePlayersReady()) {
         console.log('game starting');
         gameBoard.start();
-        intervalTimer = d3.interval(updateBoard, 250);
+        intervalTimer.startTimer();
       }
+    });
+    socket.on('restart', () => {
+      intervalTimer.stopTimer();
+      gameBoard.reset();
+      gameBoard.start();
+      intervalTimer.startTimer();
     });
     socket.on('turn', direction => {
       // tell player is turning only if game has started
@@ -51,8 +74,8 @@ module.exports = _io => {
     socket.on('disconnect', () => {
       player.disconnect();
       // tell frontend game stopped if running
-      if (intervalTimer) {
-        intervalTimer.stop();
+      if (intervalTimer.timer) {
+        intervalTimer.stopTimer();
         gameOver('playerDisconnect');
       }
     });

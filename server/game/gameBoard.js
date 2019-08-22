@@ -97,6 +97,13 @@ const startingParams = [
 ];
 
 module.exports = {
+  reset: () => {
+    for (let r = 0; r < BOARD_SIZE; r += 1) {
+      for (let c = 0; c < BOARD_SIZE; c += 1) {
+        board[r][c] = 0;
+      }
+    }
+  },
   start: () => {
     players.forEach((player, i) => {
       player.placePlayer(...startingParams[i]);
