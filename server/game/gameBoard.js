@@ -15,7 +15,7 @@ const BOARD_ELEMENTS = {
   TRAIL_2: 22,
 };
 
-const BOARD_SIZE = 12;
+const BOARD_SIZE = 50;
 
 const board = [];
 for (let i = 0; i < BOARD_SIZE; i += 1) {
@@ -53,7 +53,8 @@ class Player {
       default:
     }
     // check out of bounds
-    if (this.position.x >= 12 || this.position.y >= 12) return false;
+    if (this.position.x >= BOARD_SIZE || this.position.x < 0) return false;
+    if (this.position.y >= BOARD_SIZE || this.position.y < 0) return false;
 
     // leave trail at old place
     {
@@ -92,8 +93,8 @@ class Player {
 }
 
 const startingParams = [
-  ['right', { x: 0, y: 5 }, BOARD_ELEMENTS.PLAYER_1],
-  ['left', { x: 11, y: 5 }, BOARD_ELEMENTS.PLAYER_2],
+  ['right', { x: 0, y: Math.floor(BOARD_SIZE / 2) }, BOARD_ELEMENTS.PLAYER_1],
+  ['left', { x: BOARD_SIZE - 1, y: Math.floor(BOARD_SIZE / 2) }, BOARD_ELEMENTS.PLAYER_2],
 ];
 
 module.exports = {

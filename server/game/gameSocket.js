@@ -4,8 +4,6 @@ const gameBoard = require('./gameBoard');
 
 let io;
 
-const intervalTimer = new IntervalTimer();
-
 class IntervalTimer {
   constructor() {
     this.timer = null;
@@ -21,6 +19,8 @@ class IntervalTimer {
     this.timer = null;
   }
 }
+
+const intervalTimer = new IntervalTimer();
 
 function gameOver(event) {
   io.emit('gameOver', event);
