@@ -6,6 +6,8 @@ import LogoutButton from '../components/LogoutButton';
 import Board from './Board';
 import ReadyButton from '../components/ReadyButton';
 
+const BOARD_SIZE = 30;
+
 const socket = io();
 
 const readyPlayer = () => {
@@ -13,7 +15,6 @@ const readyPlayer = () => {
 };
 
 function handleKeyPress(e) {
-  console.log('working');
   const key = {
     ArrowLeft: 'left',
     a: 'left',
@@ -37,8 +38,12 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      board: [],
+      board: Array(BOARD_SIZE).fill(Array(BOARD_SIZE).fill(0)),
     };
+
+    socket.on('updateBoard', matrix => {
+      this.setState({ board: matrix });
+    });
   }
 
   componentDidMount() {
@@ -50,10 +55,11 @@ class Home extends Component {
   }
 
   render() {
+    const { board } = this.state;
     return (
-      <div tabIndex="0">
+      <div>
         <h1>Home</h1>
-        <Board socket={socket} />
+        <Board board={board} />
         <ReadyButton readyPlayer={readyPlayer} />
         <LogoutButton />
       </div>
