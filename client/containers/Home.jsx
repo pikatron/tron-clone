@@ -10,10 +10,12 @@ class Home extends Component {
       socket: io(),
     };
 
-    const { socket } = this.state;
-
     // emit socket events like
     // socket.emit('turn')
+  }
+
+  componentDidMount() {
+    document.addEventListener('keydown', () => console.log('keydown'));
   }
 
   render() {
