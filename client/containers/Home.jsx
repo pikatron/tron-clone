@@ -1,64 +1,76 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 
 import LogoutButton from '../components/LogoutButton';
 
 import Board from './Board';
 import ReadyButton from '../components/ReadyButton';
+import RestartButton from '../components/RestartButton';
+
+const BOARD_SIZE = 30;
 
 const socket = io();
 
-const readyPlayer = () => {
-  socket.emit('ready');
-};
+function Home() {
+  const [board, setBoard] = useState(Array(BOARD_SIZE).fill(Array(BOARD_SIZE).fill(0)));
+  const [running, setRunning] = useState(true);
+  const [winner, setWinner] = useState('none');
 
-function handleKeyPress(e) {
-  console.log('working');
-  const key = {
-    ArrowLeft: 'left',
-    a: 'left',
-
-    ArrowRight: 'right',
-    d: 'right',
-
-    ArrowUp: 'up',
-    w: 'up',
-
-    ArrowDown: 'down',
-    s: 'down',
-  };
-
-  if (key[e.key]) {
-    socket.emit('turn', key[e.key]);
+  function update(newBoard) {
+    setBoard(newBoard);
+    setRunning(true);
   }
-}
+  function stop(result) {
+    setWinner(result);
+    setRunning(false);
+  }
+  function restart() {
+    setRunning(true);
+    setWinner('none');
+    socket.emit('restart');
+  }
+  function handleKeyPress(e) {
+    const key = {
+      ArrowLeft: 'left',
+      a: 'left',
 
-class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      board: [],
+      ArrowRight: 'right',
+      d: 'right',
+
+      ArrowUp: 'up',
+      w: 'up',
+
+      ArrowDown: 'down',
+      s: 'down',
     };
+
+    if (key[e.key]) {
+      socket.emit('turn', key[e.key]);
+    }
   }
 
-  componentDidMount() {
+  useEffect(() => {
+    // componentDidMount
+    socket.on('updateBoard', update);
+    socket.on('gameOver', stop);
     document.addEventListener('keydown', handleKeyPress);
-  }
 
-  componentWillUnmount() {
-    document.removeEventListener('keydown', handleKeyPress);
-  }
+    // componentWillUnmount
+    return () => {
+      socket.off('updateBoard');
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, []);
 
-  render() {
-    return (
-      <div tabIndex="0">
-        <h1>Home</h1>
-        <Board socket={socket} />
-        <ReadyButton readyPlayer={readyPlayer} />
-        <LogoutButton />
-      </div>
-    );
-  }
+  return (
+    <div>
+      <h1>Home</h1>
+      <Board board={board} />
+      <ReadyButton readyPlayer={() => socket.emit('ready')} />
+      <RestartButton running={running} winner={winner} restart={restart} />
+      <LogoutButton />
+    </div>
+  );
 }
 
 export default Home;

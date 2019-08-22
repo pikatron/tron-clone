@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 const ReadyButton = props => {
   const [clicked, clicker] = useState(false);
@@ -9,7 +9,7 @@ const ReadyButton = props => {
 
   return (
     !clicked && (
-      <button id="ready-button" onClick={submitReady}>
+      <button type="button" id="ready-button" onClick={submitReady}>
         Ready?
       </button>
     )

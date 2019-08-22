@@ -78,7 +78,7 @@ class Player {
   placePlayer(direction, position, type) {
     this.currentDirection = direction;
     this.directionBeforeMoving = direction;
-    this.position = position;
+    this.position = { ...position };
     this.type = type;
     this.trail = parseInt(`${type}${type}`, 10);
 
@@ -88,13 +88,21 @@ class Player {
   }
 
   turn(direction) {
-    if (direction !== opposites[this.directionBeforeMoving]) {this.currentDirection = direction;}
+    if (direction !== opposites[this.directionBeforeMoving]) this.currentDirection = direction;
   }
 }
 
 const startingParams = [
-  ['right', { x: 0, y: Math.floor(BOARD_SIZE / 2) }, BOARD_ELEMENTS.PLAYER_1],
-  ['left', { x: BOARD_SIZE - 1, y: Math.floor(BOARD_SIZE / 2) }, BOARD_ELEMENTS.PLAYER_2],
+  [
+    'right',
+    { x: Math.floor(BOARD_SIZE / 5), y: Math.floor(BOARD_SIZE / 2) },
+    BOARD_ELEMENTS.PLAYER_1,
+  ],
+  [
+    'left',
+    { x: BOARD_SIZE - 1 - Math.floor(BOARD_SIZE / 5), y: Math.floor(BOARD_SIZE / 2) },
+    BOARD_ELEMENTS.PLAYER_2,
+  ],
 ];
 
 module.exports = {
