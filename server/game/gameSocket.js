@@ -28,7 +28,7 @@ function gameOver(event) {
   io.emit('gameOver', event);
   intervalTimer.stopTimer();
 }
-const i = 0;
+
 function updateBoard() {
   const collisions = gameBoard.movePlayers();
   io.emit('updateBoard', gameBoard.getBoard());

@@ -78,7 +78,7 @@ class Player {
   placePlayer(direction, position, type) {
     this.currentDirection = direction;
     this.directionBeforeMoving = direction;
-    this.position = position;
+    this.position = { ...position };
     this.type = type;
     this.trail = parseInt(`${type}${type}`, 10);
 
