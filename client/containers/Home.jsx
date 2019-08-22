@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 
 import LogoutButton from '../components/LogoutButton';
@@ -34,37 +34,29 @@ function handleKeyPress(e) {
   }
 }
 
-class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      board: Array(BOARD_SIZE).fill(Array(BOARD_SIZE).fill(0)),
-    };
+function Home() {
+  const [board, setBoard] = useState(Array(BOARD_SIZE).fill(Array(BOARD_SIZE).fill(0)));
 
-    socket.on('updateBoard', matrix => {
-      this.setState({ board: matrix });
-    });
-  }
-
-  componentDidMount() {
+  useEffect(() => {
+    // componentDidMount
+    socket.on('updateBoard', setBoard);
     document.addEventListener('keydown', handleKeyPress);
-  }
 
-  componentWillUnmount() {
-    document.removeEventListener('keydown', handleKeyPress);
-  }
+    // componentWillUnmount
+    return () => {
+      socket.off('updateBoard', setBoard);
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, []);
 
-  render() {
-    const { board } = this.state;
-    return (
-      <div>
-        <h1>Home</h1>
-        <Board board={board} />
-        <ReadyButton readyPlayer={readyPlayer} />
-        <LogoutButton />
-      </div>
-    );
-  }
+  return (
+    <div>
+      <h1>Home</h1>
+      <Board board={board} />
+      <ReadyButton readyPlayer={readyPlayer} />
+      <LogoutButton />
+    </div>
+  );
 }
 
 export default Home;
