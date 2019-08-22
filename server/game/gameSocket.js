@@ -1,13 +1,30 @@
+/* eslint-disable no-use-before-define */
 const d3 = require('d3-timer');
 const gameBoard = require('./gameBoard');
 
 let io;
 
-let intervalTimer;
+class IntervalTimer {
+  constructor() {
+    this.timer = null;
+  }
+
+  startTimer() {
+    this.timer = d3.interval(updateBoard, 250);
+  }
+
+  stopTimer() {
+    if (!this.timer) return;
+    this.timer.stop();
+    this.timer = null;
+  }
+}
+
+const intervalTimer = new IntervalTimer();
 
 function gameOver(event) {
   io.emit('gameOver', event);
-  intervalTimer.stop();
+  intervalTimer.stopTimer();
 }
 
 function updateBoard() {
@@ -24,39 +41,43 @@ function updateBoard() {
   }
 }
 
-module.exports = {
-  initial: _io => {
-    io = _io;
-    io.on('connect', socket => {
-      // alert board of new player
-      const player = gameBoard.newPlayer();
+module.exports = _io => {
+  io = _io;
+  io.on('connect', socket => {
+    // alert board of new player
+    const player = gameBoard.newPlayer();
 
-      // if player is false, too many players connected
-      if (!player) return;
+    // if player is false, too many players connected
+    if (!player) return;
 
-      socket.on('ready', () => {
-        console.log('player ready');
-        player.ready = true;
+    socket.on('ready', () => {
+      console.log('player ready');
+      player.ready = true;
 
-        // check if both players are ready
-        if (gameBoard.arePlayersReady()) {
-          console.log('game starting');
-          gameBoard.start();
-          intervalTimer = d3.interval(updateBoard, 250);
-        }
-      });
-      socket.on('turn', direction => {
-        // tell player is turning
-        player.turn(direction);
-      });
-      socket.on('disconnect', () => {
-        player.disconnect();
-        // tell frontend game stopped if running
-        if (intervalTimer) {
-          intervalTimer.stop();
-          gameOver('playerDisconnect');
-        }
-      });
+      // check if both players are ready
+      if (gameBoard.arePlayersReady()) {
+        console.log('game starting');
+        gameBoard.start();
+        intervalTimer.startTimer();
+      }
     });
-  },
+    socket.on('restart', () => {
+      intervalTimer.stopTimer();
+      gameBoard.reset();
+      gameBoard.start();
+      intervalTimer.startTimer();
+    });
+    socket.on('turn', direction => {
+      // tell player is turning only if game has started
+      if (intervalTimer) player.turn(direction);
+    });
+    socket.on('disconnect', () => {
+      player.disconnect();
+      // tell frontend game stopped if running
+      if (intervalTimer.timer) {
+        intervalTimer.stopTimer();
+        gameOver('playerDisconnect');
+      }
+    });
+  });
 };

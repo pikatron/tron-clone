@@ -6,7 +6,7 @@ const connectPG = require('connect-pg-simple');
 const http = require('http');
 const socketio = require('socket.io');
 
-const { initial } = require('./game/gameSocket');
+const gameSocket = require('./game/gameSocket');
 const authRouter = require('./routers/authRouter');
 const pool = require('./database/pool');
 
@@ -44,6 +44,6 @@ app.get('/*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../client/index.html'));
 });
 
-initial(io);
+gameSocket(io);
 
 server.listen(3000);
