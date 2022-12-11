@@ -52,7 +52,7 @@
     "body-parser": "^1.19.0",
     "connect-pg-simple": "^6.0.0",
     "d3-timer": "^1.0.9",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-session": "^1.16.2",
     "nodemon": "^1.19.1",
     "pg": "^7.12.1",
